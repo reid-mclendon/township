@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmuka6yebqw08"]
+
+[ext_resource type="Script" path="res://Character Control/Scripts/PlayerController.gd" id="1_i3gx0"]
+[ext_resource type="Script" path="res://Character Control/CameraControl.gd" id="2_15ux2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kocto"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ps6sh"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_i3gx0")
+
+[node name="visual" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.5526, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_kocto")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ps6sh")
+
+[node name="CameraMount" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58283, -0.00317049)
+
+[node name="Camera3D" type="Camera3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+fov = 85.0
+script = ExtResource("2_15ux2")

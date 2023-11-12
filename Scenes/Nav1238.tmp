@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://ll613h3vpioh"]
+
+[ext_resource type="PackedScene" uid="uid://cmuka6yebqw08" path="res://Character Control/PlayerController.tscn" id="1_srgpr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5hf7k"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_rlsjj"]
+sky_material = SubResource("ProceduralSkyMaterial_5hf7k")
+
+[sub_resource type="Environment" id="Environment_3byhv"]
+background_mode = 2
+sky = SubResource("Sky_rlsjj")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfk7f"]
+albedo_color = Color(0.168627, 0.196078, 0.360784, 1)
+metallic_specular = 0.61
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_effqs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i33w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0dfyg"]
+
+[node name="Navigation Test" type="Node3D"]
+
+[node name="Worldstuff" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Worldstuff"]
+environment = SubResource("Environment_3byhv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Worldstuff"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 2.55407, -8.76341)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_srgpr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0468581, 0.878287, -0.0451508)
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.528384, 0)
+size = Vector3(1000, 1, 1000)
+material = SubResource("StandardMaterial3D_wfk7f")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+physics_material_override = SubResource("PhysicsMaterial_effqs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
+shape = SubResource("BoxShape3D_0i33w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1.56273, 0, 2.82237, 0, 3.22613, 0, -2.82237, 0, 1.56273, -6.71589, 1.55847, -1.97754)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_0dfyg")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
