@@ -19,7 +19,7 @@ mesh = SubResource("SphereMesh_kocto")
 shape = SubResource("SphereShape3D_ps6sh")
 
 [node name="CameraMount" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58283, -0.00317049)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 3)
 
 [node name="Camera3D" type="Camera3D" parent="CameraMount"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
