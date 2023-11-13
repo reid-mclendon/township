@@ -1,31 +1,29 @@
 [gd_scene load_steps=7 format=3 uid="uid://cst4behxv5wxs"]
 
-[ext_resource type="Script" path="res://structure.gd" id="1_mg1en"]
-[ext_resource type="Material" uid="uid://bqyjx2ail34nb" path="res://testmat.material" id="1_s71xf"]
-[ext_resource type="Script" path="res://cam.gd" id="2_lw0im"]
+[ext_resource type="Material" uid="uid://bqyjx2ail34nb" path="res://testmat.material" id="1_bmk6f"]
+[ext_resource type="Script" path="res://structure.gd" id="2_oj1v6"]
+[ext_resource type="Script" path="res://cam.gd" id="3_h26b2"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qpnnd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1ofj"]
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.745098, 0.886275, 0.631373, 1)
+albedo_color = Color(0.705882, 0.996078, 0.721569, 1)
 emission = Color(0.792157, 0.556863, 0.239216, 1)
 emission_energy_multiplier = 0.18
 emission_operator = 1
-ao_enabled = true
 ao_light_affect = 0.14
 subsurf_scatter_strength = 0.37
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nv048"]
 
 [node name="MeshInstance3D" type="MeshInstance3D"]
-material_override = ExtResource("1_s71xf")
+material_override = ExtResource("1_bmk6f")
 mesh = SubResource("ArrayMesh_qpnnd")
-script = ExtResource("1_mg1en")
+script = ExtResource("2_oj1v6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.999965, 0.00839531, 0, -0.00839531, 0.999965, 0, 1.20455, 2.21412)
-script = ExtResource("2_lw0im")
+script = ExtResource("3_h26b2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.484611, 0.87473, 0, -0.87473, 0.484611, 0, 10.9402, 0)
@@ -37,6 +35,12 @@ material_override = SubResource("StandardMaterial3D_x1ofj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94009, 0, 0)
-material_override = ExtResource("1_s71xf")
+material_override = ExtResource("1_bmk6f")
 mesh = SubResource("ArrayMesh_nv048")
-script = ExtResource("1_mg1en")
+script = ExtResource("2_oj1v6")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39739, 0, 1.64627)
+material_override = ExtResource("1_bmk6f")
+mesh = SubResource("ArrayMesh_nv048")
+script = ExtResource("2_oj1v6")
