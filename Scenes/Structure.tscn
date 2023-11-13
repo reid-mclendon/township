@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmk8hcuj4ih46"]
+
+[ext_resource type="Script" path="res://structure.gd" id="1_34h7h"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_42jk8"]
+
+[node name="Structure" type="Node3D"]
+
+[node name="BuildingPrefab" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_42jk8")
+script = ExtResource("1_34h7h")

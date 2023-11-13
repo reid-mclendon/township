@@ -1,11 +1,17 @@
 extends MeshInstance3D
 
-func _ready():
-	var rng = RandomNumberGenerator.new()
-	var colors := []	
-	var colorOptions = [Color.BLUE, Color.WEB_GREEN, Color.MEDIUM_PURPLE, Color.YELLOW, Color.RED]
-	var pickedColor = colorOptions[rng.randi_range(0, (colorOptions.size() - 1))]
+var time = 0
+var lastUpdateTime = 0
+var buildingHeight = 0
+var rng = RandomNumberGenerator.new()
+var colorOptions = [Color.RED, Color.GREEN, Color.BLUE, Color.INDIGO, Color.ORANGE, Color.YELLOW, Color.VIOLET]
+var pickedColor = colorOptions[randi_range(0,colorOptions.size() - 1)]
+
+func updateMesh():
+	if (mesh.get_surface_count() > 0):
+		mesh.clear_surfaces()
 	var surface_array = []
+	var colors := []	
 	surface_array.resize(Mesh.ARRAY_MAX)
 
 	# PackedVector**Arrays for mesh construction.
@@ -22,8 +28,6 @@ func _ready():
 #             |  /  000     |  / 100               South  |
 #             H7 ---------- G6                      Z    Bottom
 #              001           101                          -Y
-	
-	var buildingHeight = rng.randi_range(0, 3)
 	
 	var a := Vector3(0, (.5 + buildingHeight), 0) 
 	var b := Vector3(1, (.5 + buildingHeight), 0) 
@@ -50,7 +54,7 @@ func _ready():
 	# Create normals
 	for v in vertices:
 		normals.append(v.normalized())
-	
+			
 	for x in range(vertices.size()):
 		colors.append(pickedColor)
 		
@@ -58,11 +62,30 @@ func _ready():
 	surface_array[Mesh.ARRAY_VERTEX] = PackedVector3Array(vertices)
 	surface_array[Mesh.ARRAY_NORMAL] = normals
 	surface_array[Mesh.ARRAY_COLOR] = PackedColorArray(colors)
+	
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	mesh.resource_local_to_scene = true
+	var newMaterial = StandardMaterial3D.new()
+	newMaterial.vertex_color_use_as_albedo = true
+	newMaterial.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	newMaterial.subsurf_scatter_enabled = true
+	newMaterial.disable_ambient_light = false
+	mesh.surface_set_material(0, newMaterial)
+	lastUpdateTime = time
+	buildingHeight += 1
+		
+func _ready():
+	randomize()		
+	updateMesh()
+	add_child(CollisionPolygon3D.new())
+	pass
+	
+func _physics_process(delta):
+	time += delta
+	if (time - lastUpdateTime >= randf_range(100, 500)):
+		updateMesh()
 
 
 	# Create mesh surface from mesh array.
 	# No blendshapes, lods, or compression used.
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 	
-	
-	print_debug(mesh)
