@@ -1,15 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://cst4behxv5wxs"]
+[gd_scene load_steps=6 format=3 uid="uid://cst4behxv5wxs"]
 
 [ext_resource type="Script" path="res://Scenes/game.gd" id="1_rl3r7"]
 [ext_resource type="Script" path="res://cam.gd" id="2_ql4kd"]
+[ext_resource type="PackedScene" uid="uid://fd2aahhtcgfx" path="res://basicUI.tscn" id="2_qlpjy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gun5x"]
-albedo_color = Color(0.615686, 0.878431, 0.47451, 1)
+albedo_color = Color(0.752941, 0.980392, 0.780392, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dwt1q"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_rl3r7")
+
+[node name="basicUI" parent="." instance=ExtResource("2_qlpjy")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 20.0
+offset_top = -333.0
+offset_right = 20.0
+offset_bottom = -333.0
+grow_horizontal = 1
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 0
+size_flags_vertical = 8
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 47.0271, 29.7623)
@@ -22,7 +37,4 @@ mesh = SubResource("PlaneMesh_dwt1q")
 skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
-shadow_enabled = true
-shadow_bias = 7.171
-shadow_blur = 9.38
+transform = Transform3D(1, 0, 0, 0, -0.136148, 0.990689, 0, -0.990689, -0.136148, 0, 41.2685, 0)

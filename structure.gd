@@ -4,16 +4,50 @@ var time = 0
 var lastUpdateTime = 0
 var buildingHeight = 1
 var rng = RandomNumberGenerator.new()
-var colorOptions = [
-	Color.LIGHT_CORAL,
-	Color.INDIAN_RED,
-	Color.FIREBRICK, 
-	Color.RED,
-	Color.DARK_RED		
-	]
-var pickedColor
 
+func weighted(items, weights):
+	var sum = 0;
+	for weight in weights:
+		sum += weight
+	print("sum is " , sum)
+	var rnd = randi_range(0, (sum - 1))
+	print ("rnd is ", rnd)
+	for weight in weights:
+		print("weight is ", weight)
+		if (rnd < weight):
+			print(rnd, " is less than ", weight)
+			return items[weights.find(weight)]
+		rnd -= weight
+
+	
+				
+	
 func updateMesh():
+	var residentialUnits = 0
+	var commercialUnits = 0
+	var industrialUnits = 0
+	var units = randi_range(buildingHeight, buildingHeight * 3)	 
+	print (units, " total unit(s)")
+	for unit in units:
+		var newUnit = weighted(['ind', 'com', 'res'], [25, 50, 100])
+		print ("new ", newUnit, " unit added")
+		if (newUnit == 'res'):
+			residentialUnits += 1
+		if (newUnit == 'com'):
+			commercialUnits += 1
+		if (newUnit == 'ind'):
+			industrialUnits += 1
+	var red = (residentialUnits / float(units))
+	var green = (industrialUnits / float(units))
+	var blue = (commercialUnits / float(units))
+	var buildingColor = Color(red, green, blue)
+	
+	print ('red:')
+	print (red)
+	print ('green:')
+	print (green)
+	print ('blue:')
+	print (blue)
 	if (mesh.get_surface_count() > 0): # Delete old mesh surfaces if they exist
 		mesh.clear_surfaces()
 	var surface_array = []
@@ -35,12 +69,12 @@ func updateMesh():
 #             H7 ---------- G6                      Z    Bottom
 #              001           101                          -Y
 	
-	var a := Vector3(0, (-.5 + buildingHeight), 0) 
-	var b := Vector3(1, (-.5 + buildingHeight), 0) 
+	var a := Vector3(0, (buildingHeight - 0.5), 0) 
+	var b := Vector3(1, (buildingHeight - 0.5), 0) 
 	var c := Vector3(1, 0, 0) 
 	var d := Vector3(0, 0, 0)
-	var e := Vector3(0, (-.5 + buildingHeight), 1)
-	var f := Vector3(1, (-.5 + buildingHeight), 1)
+	var e := Vector3(0, (buildingHeight - 0.5), 1)
+	var f := Vector3(1, (buildingHeight - 0.5), 1)
 	var g := Vector3(1, 0, 1)
 	var h := Vector3(0, 0, 1)
 	var i := Vector3(.5, (buildingHeight), 1)
@@ -56,14 +90,12 @@ func updateMesh():
 	j,f,i,  f,j,b,  #TE
 	a,i,e,  j,i,a   #TW
 	]
-	pickedColor = colorOptions[buildingHeight - 1]
-	
 	# Create normals
 	for v in vertices:
 		normals.append(v.normalized())
 			
 	for x in range(vertices.size()):
-		colors.append(pickedColor)
+		colors.append(buildingColor)
 		
 	# Assign arrays to surface array.
 	surface_array[Mesh.ARRAY_VERTEX] = PackedVector3Array(vertices)
@@ -74,11 +106,10 @@ func updateMesh():
 	mesh.resource_local_to_scene = true
 	var newMaterial = StandardMaterial3D.new()
 	newMaterial.vertex_color_use_as_albedo = true
-	newMaterial.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	newMaterial.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
 	mesh.surface_set_material(0, newMaterial)
 	lastUpdateTime = time
-	if (buildingHeight < 5):
-		buildingHeight += 1
+	buildingHeight += 1
 		
 func _ready():
 	randomize()		
@@ -88,7 +119,7 @@ func _ready():
 	
 func _physics_process(delta):
 	time += delta
-	if (time - lastUpdateTime >= randf_range(100, 1000)):
+	if (time - lastUpdateTime >= randf_range(100, 10000)):
 		updateMesh()
 
 
