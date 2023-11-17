@@ -19,9 +19,6 @@ func weighted(items, weights):
 			return items[weights.find(weight)]
 		rnd -= weight
 
-	
-				
-	
 func updateMesh():
 	var residentialUnits = 0
 	var commercialUnits = 0
@@ -42,12 +39,6 @@ func updateMesh():
 	var blue = (commercialUnits / float(units))
 	var buildingColor = Color(red, green, blue)
 	
-	print ('red:')
-	print (red)
-	print ('green:')
-	print (green)
-	print ('blue:')
-	print (blue)
 	if (mesh.get_surface_count() > 0): # Delete old mesh surfaces if they exist
 		mesh.clear_surfaces()
 	var surface_array = []
