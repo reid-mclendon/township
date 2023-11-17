@@ -19,6 +19,7 @@ fit_content = true
 scroll_active = false
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_top = 494.0
 offset_right = 272.0
 offset_bottom = 558.0
@@ -28,6 +29,7 @@ fit_content = true
 scroll_active = false
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_top = 584.0
 offset_right = 272.0
 offset_bottom = 648.0

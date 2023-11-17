@@ -1,14 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://cst4behxv5wxs"]
+[gd_scene load_steps=9 format=3 uid="uid://cst4behxv5wxs"]
 
 [ext_resource type="Script" path="res://Scenes/game.gd" id="1_rl3r7"]
 [ext_resource type="PackedScene" uid="uid://06ojtnxfej77" path="res://Scenes/path_builder.tscn" id="2_nbh3d"]
-[ext_resource type="Script" path="res://cam.gd" id="2_ql4kd"]
 [ext_resource type="PackedScene" uid="uid://fd2aahhtcgfx" path="res://basicUI.tscn" id="2_qlpjy"]
+[ext_resource type="Texture2D" uid="uid://db7beih7ssafo" path="res://addons/kenney_prototype_textures/green/texture_08.png" id="4_5ifct"]
+[ext_resource type="PackedScene" uid="uid://cmuka6yebqw08" path="res://Character Control/PlayerController.tscn" id="5_eu5uj"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gun5x"]
-albedo_color = Color(0.752941, 0.980392, 0.780392, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rep4f"]
+albedo_color = Color(0.419608, 0.588235, 0.439216, 1)
+albedo_texture = ExtResource("4_5ifct")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dwt1q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ovb20"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_rl3r7")
@@ -29,15 +33,20 @@ scale = Vector2(0.5, 0.5)
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 47.0271, 29.7623)
-script = ExtResource("2_ql4kd")
-
 [node name="Land" type="MeshInstance3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -0.01, 0)
-material_override = SubResource("StandardMaterial3D_gun5x")
+material_override = SubResource("StandardMaterial3D_rep4f")
 mesh = SubResource("PlaneMesh_dwt1q")
 skeleton = NodePath("")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Land"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Land/StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_ovb20")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.136148, 0.990689, 0, -0.990689, -0.136148, 0, 41.2685, 0)
+
+[node name="Player" parent="." instance=ExtResource("5_eu5uj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.449493, 0.59152, 0.167362)
