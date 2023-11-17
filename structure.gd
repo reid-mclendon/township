@@ -98,6 +98,7 @@ func updateMesh():
 	var newMaterial = StandardMaterial3D.new()
 	newMaterial.vertex_color_use_as_albedo = true
 	newMaterial.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	newMaterial.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mesh.surface_set_material(0, newMaterial)
 	lastUpdateTime = time
 	buildingHeight += 1

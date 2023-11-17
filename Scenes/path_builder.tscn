@@ -1,25 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://06ojtnxfej77"]
+[gd_scene load_steps=3 format=3 uid="uid://06ojtnxfej77"]
 
-[ext_resource type="Script" path="res://cam.gd" id="1_wqbkt"]
 [ext_resource type="Script" path="res://Scenes/build_path.gd" id="2_f16pw"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffrxg"]
-albedo_color = Color(0.603922, 0.847059, 0.509804, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_a7m8i"]
 
 [node name="path_builder" type="Node3D"]
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, 0, -0.51, 0)
-material_override = SubResource("StandardMaterial3D_ffrxg")
-
-[node name="FreeLookCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.898587, 0.438795, 0, -0.438795, 0.898587, 0, 1.2408, 1.80798)
-script = ExtResource("1_wqbkt")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.885823, 0.464023, 0, -0.464023, 0.885823, 0, 0.770608, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_a7m8i")

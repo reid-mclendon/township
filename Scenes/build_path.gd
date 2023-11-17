@@ -48,6 +48,15 @@ func generate():
 	var newMaterial = StandardMaterial3D.new()
 	newMaterial.vertex_color_use_as_albedo = true
 	mesh.surface_set_material(0, newMaterial)
+	
+func isValid(pos):
+	if pos == null:
+		return false
+	else:
+		var vecPos = Vector3(pos)
+		if abs(vecPos.x) > 100 || abs(vecPos.z) > 100:
+			return false
+		else: return true
 
 func getMousePos():
 	var dropPlane  = Plane(Vector3(0, 1, 0), 0)
@@ -55,26 +64,32 @@ func getMousePos():
 	var position3D = dropPlane.intersects_ray(
 							 get_viewport().get_camera_3d().project_ray_origin(position2D),
 							 get_viewport().get_camera_3d().project_ray_normal(position2D))
-	if (position3D == null):
-		return Vector3(0,0,0)
-	return Vector3((position3D))
+	if isValid(position3D):
+		return Vector3(position3D)
+	else: return null
 	
 func addPoint(newPoint):
 	points.push_back(newPoint)
 	print('points: ', points)
 	
-func buildLine():
-	surface_array[Mesh.ARRAY_VERTEX] = PackedVector3Array(points)
-	current_array = surface_array
-	points.clear()
-	isDrawing = true
-	print('buildingLine')
+func buildLines():
+	print('buildingLines')
+	lines.clear()	
+	for p in points:
+		var currentIdx = points.find(p)
+		if currentIdx > 1:
+			lines.push_back(points[currentIdx - 1])
+		lines.push_back(p)
+	print(lines)
+	surface_array[Mesh.ARRAY_VERTEX] = PackedVector3Array(lines)
+	if (!isDrawing):
+		isDrawing = true
 	
 func drawLines():
 	if (mesh.get_surface_count() > 0):
 		mesh.clear_surfaces()
 
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, current_array)
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, surface_array)
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -85,9 +100,12 @@ func _ready():
 func _process(delta):
 	# Click once, second point is wherever mouse is
 	if Input.is_action_just_released("LeftClick"):
-		addPoint(getMousePos())
-		if points.size() % 2 == 0 && points.size() > 0:
-			buildLine()
+		var newPoint = getMousePos()
+		if newPoint != null:
+			addPoint(newPoint)
+			clicks += 1
+		if clicks > 1:
+			buildLines()
 	
 	if isDrawing:
 		drawLines()

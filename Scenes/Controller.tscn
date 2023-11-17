@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cst4behxv5wxs"]
+[gd_scene load_steps=7 format=3 uid="uid://cst4behxv5wxs"]
 
 [ext_resource type="Script" path="res://Scenes/game.gd" id="1_rl3r7"]
+[ext_resource type="PackedScene" uid="uid://06ojtnxfej77" path="res://Scenes/path_builder.tscn" id="2_nbh3d"]
 [ext_resource type="Script" path="res://cam.gd" id="2_ql4kd"]
 [ext_resource type="PackedScene" uid="uid://fd2aahhtcgfx" path="res://basicUI.tscn" id="2_qlpjy"]
 
@@ -11,6 +12,8 @@ albedo_color = Color(0.752941, 0.980392, 0.780392, 1)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_rl3r7")
+
+[node name="path_builder" parent="." instance=ExtResource("2_nbh3d")]
 
 [node name="basicUI" parent="." instance=ExtResource("2_qlpjy")]
 anchors_preset = 2
@@ -31,7 +34,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 script = ExtResource("2_ql4kd")
 
 [node name="Land" type="MeshInstance3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -0.01, 0)
 material_override = SubResource("StandardMaterial3D_gun5x")
 mesh = SubResource("PlaneMesh_dwt1q")
 skeleton = NodePath("")
